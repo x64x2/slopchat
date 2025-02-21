@@ -2,7 +2,7 @@
 
 Do you hate chatting? Me too.
 
-This is a blazing small chat, tiny like your dick harghhhhhhhhhhhhhh!!!!!!!!!!!!!!!!!!
+This is a tiny small chat, just like your dick harghhhhhhhhhhhhhh!!!!!!!!!!!!!!!!!!
 
 features:
   - chat
