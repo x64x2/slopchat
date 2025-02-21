@@ -1,0 +1,14 @@
+---
+- hosts: slopchat
+  remote_user: vagrant
+  become: true
+  tasks:
+    - name: install epel repo
+      yum: pkg=epel-release state=present
+    - name: install packages
+      yum: pkg={{item}} state=latest
+      with_items:
+        - gcc
+        - clang
+        - openssl
+        - openssl-devel

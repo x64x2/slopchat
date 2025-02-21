@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "slopchat-dev" do |slopchat|
+    slopchatdev.vm.box = "x64x2/artix-7.2"
+    slopchatdev.vm.hostname = "slopchat"
+
+    slopchatdev.vm.network :private_network, type: "dhcp"
+
+    nfs_options = {
+        nfs: true,
+        nfs_version: 3,
+        nfs_udp: false
+    }
+
+    slopchat.vm.synced_folder "slopchat", "/repos/slopchat", nfs_options
+    slopchat.vm.synced_folder "slopchat-server", "/repos/slopchat-server", nfs_options
+    slopchat.vm.synced_folder "slopchat-client", "/repos/slopchat-client", nfs_options
+
+    slopchatdev.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--memory", 2048]
+        vb.customize ["modifyvm", :id, "--cpus", 2]
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+        vb.customize ["modifyvm", :id, "--ioapic", "on"] 
+    end
+
+    slopchatdev.vm.provision "ansible" do |ansible|
+        ansible.playbook = "setup.yml"
+    end
+  end
+end
